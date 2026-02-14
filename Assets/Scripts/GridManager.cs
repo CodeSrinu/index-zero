@@ -9,7 +9,7 @@ public class GridManager : MonoBehaviour
     public float spacing = 0.2f;
 
 
-    public bool showGizmos;
+    public bool showGizmos = true;
     private Vector3 gridOrigin;
 
     private void Start()
@@ -22,7 +22,7 @@ public class GridManager : MonoBehaviour
         Vector3 localPos = objWorldPos - gridOrigin;
 
         int col = Mathf.RoundToInt(localPos.x / spacing);
-        int row = Mathf.RoundToInt(localPos.y / spacing);
+        int row = Mathf.RoundToInt(localPos.z / spacing);
 
         col = Mathf.Clamp(col, 0, columns - 1);
         row = Mathf.Clamp(row, 0, rows - 1);
@@ -37,12 +37,13 @@ public class GridManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if(!showGizmos) return;
         Vector3 origin = Application.isPlaying ? gridOrigin : transform.position;
         Gizmos.color = Color.yellow;
 
-        for(int col = 0; col < rows;  col++)
+        for(int row = 0; row < rows;  row++)
         {
-            for (int row = 0; row < columns; row++)
+            for (int col = 0; col < columns; col++)
             {
                 Vector3 pointPos = gridOrigin + new Vector3(col * spacing, 0, row * spacing);
                 Gizmos.DrawWireSphere(pointPos, snapRange);
