@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class GridRegion : MonoBehaviour
+public class GridRegion
 {
 
     public string gridRegion;
@@ -12,6 +12,7 @@ public class GridRegion : MonoBehaviour
 
     [Header("Grid parameters")]
     public Vector3 localOrigin;
+    public Transform originMaker;
     public int rows;
     public int columns;
     public float rowSpacing;
@@ -24,11 +25,16 @@ public class GridRegion : MonoBehaviour
     public Bounds localBounds;
 
 
-    public void CalculateBounds()
+    public void CalculateBounds(Transform breadboardRoot)
     {
-        Vector3 size = new Vector3(rows * rowSpacing, 0.01f, columns * columnSpacing);
+        if(originMaker != null)
+        {
+            localOrigin = breadboardRoot.InverseTransformPoint(originMaker.position);
+        }
 
-        Vector3 center = new Vector3(size.x / 2, 0, size.z / 2);
+        Vector3 size = new Vector3(columns * columnSpacing, 0.01f, rows * rowSpacing);
+
+        Vector3 center = localOrigin + new Vector3(size.x / 2, 0, size.z / 2);
 
         localBounds = new Bounds(center, size);
     }

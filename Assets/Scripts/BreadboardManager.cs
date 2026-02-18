@@ -9,8 +9,9 @@ public class BreadboardManager : MonoBehaviour
     public Transform breadboardRoot;
 
     public GridRegion topPowerRail;
+    public GridRegion mainAreaUpper;
+    public GridRegion mainAreaLower;
     public GridRegion bottomPowerRail;
-    public GridRegion mainArea;
 
     public List<GridRegion> allRegions;
 
@@ -25,12 +26,13 @@ public class BreadboardManager : MonoBehaviour
 
     private void InitializeAllRegions()
     {
-        topPowerRail.CalculateBounds();
-        bottomPowerRail.CalculateBounds();
-        mainArea.CalculateBounds();
+        topPowerRail.CalculateBounds(breadboardRoot);
+        bottomPowerRail.CalculateBounds(breadboardRoot);
+        mainAreaUpper.CalculateBounds(breadboardRoot);
+        mainAreaLower.CalculateBounds(breadboardRoot);
 
 
-        allRegions = new List<GridRegion> { topPowerRail, mainArea,  bottomPowerRail };
+        allRegions = new List<GridRegion> { topPowerRail, mainAreaUpper, mainAreaLower, bottomPowerRail };
     }
 
 
@@ -38,7 +40,11 @@ public class BreadboardManager : MonoBehaviour
 
     public bool TryGetSnapPoint(Vector3 legWorldPos, out Vector3 snapPoint, out GridRegion snapRegion)
     {
-        Vector3 legLocalPos = legWorldPos - breadboardRoot.transform.position;
+        Vector3 legLocalPos = breadboardRoot.InverseTransformPoint(legWorldPos);
+
+
+        snapPoint = Vector3.zero;
+        snapRegion = null;
 
         foreach (GridRegion region in allRegions)
         {
@@ -51,15 +57,16 @@ public class BreadboardManager : MonoBehaviour
 
                 if(distance <= region.snapRange)
                 {
-                    snapPoint = breadboardRoot.transform.position + localHolePos;
+                    snapPoint = breadboardRoot.TransformPoint(localHolePos);
                     snapRegion = region;
                     return true;
                 }
             }
-            snapPoint = Vector3.zero;
-            snapRegion = null;
-            return false;
+            
         }
+
+
+        return false;
     }
 
 
@@ -75,15 +82,15 @@ public class BreadboardManager : MonoBehaviour
         col = Mathf.Clamp(col, 0, region.columns - 1);
         row = Mathf.Clamp(row, 0, region.rows - 1);
 
-        return new Vector2Int(row, col);
+        return new Vector2Int(col, row);
 
     }
 
     private Vector3 GetLocalHolePosition(Vector2Int gridCoord, GridRegion region)
     {
         float x = region.localOrigin.x + gridCoord.x * region.columnSpacing;
-        float y = region.localOrigin.z + gridCoord.y * region.rowSpacing;
-        float z = region.localOrigin.y;
+        float y = region.localOrigin.y;
+        float z = region.localOrigin.z + gridCoord.y * region.rowSpacing;
 
         return new Vector3(x, y, z);
     }
@@ -94,9 +101,8 @@ public class BreadboardManager : MonoBehaviour
     {
         if(!showGizmos) return;
         if (breadboardRoot == null) return;
-        if (!Application.isPlaying) return;
 
-        Color[] colors = { Color.blue, Color.green, Color.red, };
+        Color[] colors = { Color.green, Color.blue, Color.cyan, Color.red};
         int colorIndex = 0;
 
         foreach(GridRegion region in allRegions)
@@ -109,7 +115,7 @@ public class BreadboardManager : MonoBehaviour
                 {
                     Vector2Int grodCoord = new Vector2Int(row, col);
                     Vector3 localHolePos = GetLocalHolePosition(grodCoord, region);
-                    Vector3 worldPos = breadboardRoot.transform.position + localHolePos;
+                    Vector3 worldPos = breadboardRoot.TransformPoint(localHolePos);
 
                     Gizmos.DrawWireSphere(worldPos, 0.01f);
                 }
