@@ -75,12 +75,36 @@ public class BreadboardManager : MonoBehaviour
     private Vector2Int CalculateNearestCoord(Vector3 legLocalPos, GridRegion region)
     {
         Vector3 legPosRelToRegion = legLocalPos - region.localOrigin;
-
-        int col = Mathf.RoundToInt(legPosRelToRegion.x / region.columnSpacing); 
+        
         int row = Mathf.RoundToInt(legPosRelToRegion.z / region.rowSpacing);
-
-        col = Mathf.Clamp(col, 0, region.columns - 1);
         row = Mathf.Clamp(row, 0, region.rows - 1);
+        int col;
+        if (region.isSegmentedCol)
+        {
+            col = 0;
+
+            float minDistance = Mathf.Infinity;
+            for(int c = 0; c < region.columns; c++)
+            {
+                float colXPos = region.GetColumnXOffset(c);
+                float distance =  Mathf.Abs(colXPos - legPosRelToRegion.x);
+
+                if(distance < minDistance)
+                {
+                    minDistance = distance;
+                    col = c;
+                }
+            }
+
+
+        }
+        else
+        {
+            col = Mathf.RoundToInt(legPosRelToRegion.x / region.columnSpacing); 
+            col = Mathf.Clamp(col, 0, region.columns - 1);
+        }
+
+
 
         return new Vector2Int(col, row);
 
@@ -88,7 +112,7 @@ public class BreadboardManager : MonoBehaviour
 
     private Vector3 GetLocalHolePosition(Vector2Int gridCoord, GridRegion region)
     {
-        float x = region.localOrigin.x + gridCoord.x * region.columnSpacing;
+        float x = region.localOrigin.x + region.GetColumnXOffset(gridCoord.x);
         float y = region.localOrigin.y;
         float z = region.localOrigin.z + gridCoord.y * region.rowSpacing;
 
@@ -101,6 +125,7 @@ public class BreadboardManager : MonoBehaviour
     {
         if(!showGizmos) return;
         if (breadboardRoot == null) return;
+        if(!Application.isPlaying) return;
 
         Color[] colors = { Color.green, Color.blue, Color.cyan, Color.red};
         int colorIndex = 0;
@@ -113,7 +138,7 @@ public class BreadboardManager : MonoBehaviour
             {
                 for(int col = 0; col < region.columns; col++)
                 {
-                    Vector2Int grodCoord = new Vector2Int(row, col);
+                    Vector2Int grodCoord = new Vector2Int(col, row);
                     Vector3 localHolePos = GetLocalHolePosition(grodCoord, region);
                     Vector3 worldPos = breadboardRoot.TransformPoint(localHolePos);
 
