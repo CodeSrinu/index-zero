@@ -1,4 +1,5 @@
 using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -6,7 +7,7 @@ using UnityEngine;
 public class GridRegion
 {
     [Header("Identity")]
-    public string gridRegion;
+    public string regionName;
     public ConnectivityType connectivityType;
 
 
@@ -20,9 +21,11 @@ public class GridRegion
 
     public bool isSegmentedCol = false;
     public int segmentedColSize = 5;
-    public float segmentedColSpacing = 0.12f;
+    public float segmentedColGap = 0.0592f;
 
-    public float snapRange = 0.05f;
+    public float snapRange = 1f;
+    Vector3 size;
+    Vector3 center;
 
     [HideInInspector]
     public Bounds localBounds;
@@ -40,7 +43,7 @@ public class GridRegion
         if (isSegmentedCol)
         {
             int lastCol = columns - 1;
-            totalWidth = GetColumnXOffset(lastCol) + columnSpacing;
+            totalWidth = GetColumnXOffset(lastCol);
         }
         else
         {
@@ -48,11 +51,13 @@ public class GridRegion
         }
 
 
-        Vector3 size = new Vector3(totalWidth, 0.01f, rows * rowSpacing);
+        size = new Vector3(rows * rowSpacing, 0.01f,totalWidth);
 
-        Vector3 center = localOrigin + new Vector3(size.x / 2, 0, size.z / 2);
+        center = localOrigin + new Vector3(size.x / 2, 0, size.z / 2);
 
         localBounds = new Bounds(center, size);
+
+
     }
 
 
@@ -61,7 +66,7 @@ public class GridRegion
         if (isSegmentedCol)
         {
             int colBlockIndex = col / segmentedColSize;
-            return col * columnSpacing + colBlockIndex * segmentedColSpacing;
+            return col * columnSpacing + colBlockIndex * segmentedColGap;
         }
         else
         {

@@ -69,11 +69,11 @@ public class BreadboardManager : MonoBehaviour
     {
         Vector3 legPosRelToRegion = legLocalPos - region.localOrigin;
 
-        // SWAPPED: Rows along X-axis (to match your breadboard)
+        //Rows along x-axis (to match the breadboard)
         int row = Mathf.RoundToInt(legPosRelToRegion.x / region.rowSpacing);
         row = Mathf.Clamp(row, 0, region.rows - 1);
 
-        // SWAPPED: Columns along Z-axis (to match your breadboard)
+        //Columns along z-axis (to match the breadboard)
         int col;
         if (region.isSegmentedCol)
         {
@@ -103,7 +103,7 @@ public class BreadboardManager : MonoBehaviour
 
     private Vector3 GetLocalHolePosition(Vector2Int gridCoord, GridRegion region)
     {
-        // SWAPPED: To match your breadboard's orientation
+        // SWAPPED: To match the breadboard's orientation
         float x = region.localOrigin.x + gridCoord.y * region.rowSpacing;  // Rows along X
         float z = region.localOrigin.z + region.GetColumnXOffset(gridCoord.x);  // Columns along Z
         float y = region.localOrigin.y;
@@ -122,6 +122,7 @@ public class BreadboardManager : MonoBehaviour
 
         foreach (GridRegion region in allRegions)
         {
+            // Draw grid holes
             Gizmos.color = colors[colorIndex];
 
             for (int row = 0; row < region.rows; row++)

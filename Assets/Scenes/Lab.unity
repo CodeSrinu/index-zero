@@ -603,7 +603,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -669,7 +669,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.895, y: 0.444204, z: 0.734}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.049999997, y: 0.049999997, z: 0.049999997}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -873,7 +873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breadboardRoot: {fileID: 552354698}
   topPowerRail:
-    gridRegion: Top Power Rail
+    regionName: 
     connectivityType: 1
     localOrigin: {x: 0, y: 0, z: 0}
     originMaker: {fileID: 417726546}
@@ -883,13 +883,13 @@ MonoBehaviour:
     columnSpacing: 0.0592
     isSegmentedCol: 1
     segmentedColSize: 5
-    segmentedColSpacing: 0.0592
+    segmentedColGap: 0.0592
     snapRange: 0.05
     localBounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
   mainAreaUpper:
-    gridRegion: Main Area Upper
+    regionName: 
     connectivityType: 0
     localOrigin: {x: 0, y: 0, z: 0}
     originMaker: {fileID: 87298496}
@@ -899,13 +899,13 @@ MonoBehaviour:
     columnSpacing: 0.0592
     isSegmentedCol: 0
     segmentedColSize: 5
-    segmentedColSpacing: 0.12
+    segmentedColGap: 0.12
     snapRange: 0.05
     localBounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
   mainAreaLower:
-    gridRegion: Main Area Lower
+    regionName: 
     connectivityType: 0
     localOrigin: {x: 0, y: 0, z: 0}
     originMaker: {fileID: 377452870}
@@ -915,13 +915,13 @@ MonoBehaviour:
     columnSpacing: 0.0592
     isSegmentedCol: 0
     segmentedColSize: 5
-    segmentedColSpacing: 0.12
+    segmentedColGap: 0.12
     snapRange: 0.05
     localBounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
   bottomPowerRail:
-    gridRegion: Bottom Power Rail
+    regionName: 
     connectivityType: 1
     localOrigin: {x: 0, y: 0, z: 0}
     originMaker: {fileID: 504178948}
@@ -931,7 +931,7 @@ MonoBehaviour:
     columnSpacing: 0.0592
     isSegmentedCol: 1
     segmentedColSize: 5
-    segmentedColSpacing: 0.0592
+    segmentedColGap: 0.0592
     snapRange: 0.05
     localBounds:
       m_Center: {x: 0, y: 0, z: 0}
@@ -942,6 +942,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
   m_PrefabInstance: {fileID: 1633518756}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &552354699
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552354696}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &599659564
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,6 +2470,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 552354697}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 552354699}
   m_SourcePrefab: {fileID: 100100000, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
 --- !u!1 &1684020551 stripped
 GameObject:
@@ -3503,7 +3533,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.087, y: 0.83, z: -0.804}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -3700,7 +3730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrabbed: 0
-  breadboardManager: {fileID: 0}
+  breadboardManager: {fileID: 552354697}
   snapVisualizer: {fileID: 480142075}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
