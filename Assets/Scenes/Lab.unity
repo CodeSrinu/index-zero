@@ -790,13 +790,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504178946}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: -0.524, y: -0.097, z: -1.648}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5232, y: -0.097, z: -1.646}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 552354698}
-  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &509389591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -883,7 +883,7 @@ MonoBehaviour:
     columnSpacing: 0.0592
     isSegmentedCol: 1
     segmentedColSize: 5
-    segmentedColSpacing: 0.12
+    segmentedColSpacing: 0.0592
     snapRange: 0.05
     localBounds:
       m_Center: {x: 0, y: 0, z: 0}
@@ -931,12 +931,11 @@ MonoBehaviour:
     columnSpacing: 0.0592
     isSegmentedCol: 1
     segmentedColSize: 5
-    segmentedColSpacing: 0.12
+    segmentedColSpacing: 0.0592
     snapRange: 0.05
     localBounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
-  allRegions: []
   showGizmos: 1
 --- !u!4 &552354698 stripped
 Transform:
@@ -2391,19 +2390,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000015454313
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.70710677
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000015454312
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0ca25dee540f1045bbca30a50b1b9b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2635,7 +2634,7 @@ MonoBehaviour:
   m_Camera: {fileID: 1499070369}
   m_OriginBaseGameObject: {fileID: 1802506452}
   m_CameraFloorOffsetObject: {fileID: 929302158}
-  m_RequestedTrackingOriginMode: 0
+  m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.1176
 --- !u!4 &1802506455
 Transform:
@@ -3701,7 +3700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrabbed: 0
-  breadboardManager: {fileID: 552354697}
+  breadboardManager: {fileID: 0}
   snapVisualizer: {fileID: 480142075}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

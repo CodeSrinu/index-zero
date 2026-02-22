@@ -40,7 +40,7 @@ public class GridRegion
         if (isSegmentedCol)
         {
             int lastCol = columns - 1;
-            totalWidth = GetColumnXOffset(lastCol);
+            totalWidth = GetColumnXOffset(lastCol) + columnSpacing;
         }
         else
         {
