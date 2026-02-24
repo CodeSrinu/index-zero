@@ -13,9 +13,10 @@ public class CircuitSolver : MonoBehaviour
 
     [Header("Voltage")]
     public float supplyVoltage = 5f;
+    public float solvedCurrent = 0f;
 
     private Dictionary<string, Node> nodeMap = new Dictionary<string, Node>();
-    private List<CircuitComponent> components = new List<CircuitComponent   >();
+    private List<CircuitComponent> components = new List<CircuitComponent>();
 
 
     int nextNodeId;
