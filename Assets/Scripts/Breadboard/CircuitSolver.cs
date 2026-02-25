@@ -6,11 +6,6 @@ public class CircuitSolver : MonoBehaviour
     [Header("Ref")]
     public BreadboardManager breadboardManager;
 
-
-    [Header("Power Rails")]
-    public GridRegion positivePowerRail;
-    public GridRegion negativePowerRail;
-
     [Header("Voltage")]
     public float supplyVoltage = 5f;
     public float solvedCurrent = 0f;
@@ -34,6 +29,7 @@ public class CircuitSolver : MonoBehaviour
         {
             foreach(ComponentLeg leg in comp.legs)
             {
+                if (!leg.isSnapped) return;
                 string key = GetKeyNode(leg);
                 if (!nodeMap.ContainsKey(key))
                 {
@@ -54,6 +50,13 @@ public class CircuitSolver : MonoBehaviour
                     battery.legs[1].node.voltage = 0f;
                 }
             }
+        }
+
+        CalculateVoltages();
+
+        foreach(CircuitComponent comp in components)
+        {
+            comp.Simulate(this);
         }
 
     }
@@ -121,57 +124,62 @@ public class CircuitSolver : MonoBehaviour
         bool batterOn = false;
 
 
-        foreach(CircuitComponent comp  in components)
+        foreach (CircuitComponent comp in components)
         {
-            if(comp is ResisterComponent resister)
+            if (comp is ResisterComponent resister)
             {
                 totalResistance += resister.resistance;
             }
 
-            if(comp is LEDComponent led)
+            if (comp is LEDComponent led)
             {
                 totalForwardVoltage += led.forwardVoltage;
             }
 
             if (comp is BatteryComponent battery)
             {
-                if (battery.legs[0].node != null && battery.legs[1].node != null)
+                if (battery.legs[0].node != null)
                 {
-                    lowVoltage = battery.legs[0].node.voltage;
-                    highVoltage = battery.legs[1].node.voltage;
+                    highVoltage = battery.legs[0].node.voltage;
                 }
-            }
 
-            if (!batterOn) return;
-            if (lowVoltage < 0 && highVoltage < 0) return;
-
-            float availableVoltage = highVoltage - lowVoltage;
-            if (availableVoltage <= 0f) return;
-
-            if(totalResistance <= 0f)
-            {
-                solvedCurrent = 999f;
-                return;
-            }
-
-            float voltageAcrossResister = availableVoltage - totalForwardVoltage;
-            if(voltageAcrossResister <= 0)
-            {
-                solvedCurrent = 0f;
-                return;
-            }
-
-
-            solvedCurrent = voltageAcrossResister/totalResistance;
-
-
-            foreach(var kvp in nodeMap)
-            {
-                if(kvp.Value.voltage == -1f)
+                if (battery.legs[1].node != null)
                 {
-                    kvp.Value.voltage = lowVoltage + totalForwardVoltage;
+                    lowVoltage = battery.legs[1].node.voltage;
                 }
             }
         }
+
+        if (!batterOn) return;
+        if (lowVoltage < 0 && highVoltage < 0) return;
+
+        float availableVoltage = highVoltage - lowVoltage;
+        if (availableVoltage <= 0f) return;
+
+        if(totalResistance <= 0f)
+        {
+            solvedCurrent = 999f;
+            return;
+        }
+
+        float voltageAcrossResister = availableVoltage - totalForwardVoltage;
+        if(voltageAcrossResister <= 0)
+        {
+            solvedCurrent = 0f;
+            return;
+        }
+
+
+        solvedCurrent = voltageAcrossResister/totalResistance;
+
+
+        foreach(var kvp in nodeMap)
+        {
+            if(kvp.Value.voltage == -1f)
+            {
+                kvp.Value.voltage = lowVoltage + totalForwardVoltage;
+            }
+        }
+     
     }   
 }

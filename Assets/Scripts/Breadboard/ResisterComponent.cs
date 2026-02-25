@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ResisterComponent : CircuitComponent
+public class ResisterComponent : CircuitComponent
 {
     [Header("Resistance")]
     public float resistance = 220f;

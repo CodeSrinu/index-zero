@@ -39,10 +39,11 @@ public class SnappableComponent : MonoBehaviour
             foreach(ComponentLeg leg in legs)
             {
                 leg.ClearSnap();
-                if(component != null )
-                {
-                    solver.UnRegisterComponent(component);
-                }
+            }
+
+            if(component != null )
+            {
+                solver.UnRegisterComponent(component);
             }
         }
     }
@@ -93,7 +94,7 @@ public class SnappableComponent : MonoBehaviour
             }
         }
 
-        Vector3 midPoint = (legs[0].transform.position + legs[1].transform.position) / 2f;
+        Vector3 midPoint = (pendingSnapPoints[0] + pendingSnapPoints[1]) / 2f;
         transform.position = midPoint;
         transform.localRotation = Quaternion.identity;
 

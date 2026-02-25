@@ -77,7 +77,7 @@ public class LEDComponent : CircuitComponent
 
     private void SetState(LEDState newState)
     {
-        if (newState == LEDState.Blown) return;
+        if (currentState == LEDState.Blown) return;
 
         currentState = newState;
 
@@ -100,7 +100,7 @@ public class LEDComponent : CircuitComponent
     {
         if(bulbMaterial != null)
         {
-            bulbMaterial.DisableKeyword("_EmissionColor");
+            bulbMaterial.DisableKeyword("_EMISSION");
             bulbMaterial.SetColor(EmissionColor, Color.black);
         }
 
@@ -116,7 +116,7 @@ public class LEDComponent : CircuitComponent
     {
         if (bulbMaterial != null)
         {
-            bulbMaterial.EnableKeyword("_EmissionColor");
+            bulbMaterial.EnableKeyword("_EMISSION");
             bulbMaterial.SetColor(EmissionColor, ledColor * 2f);
         }
 
@@ -139,7 +139,7 @@ public class LEDComponent : CircuitComponent
 
         if (bulbMaterial != null)
         {
-            bulbMaterial.EnableKeyword("_EmissionColor");
+            bulbMaterial.EnableKeyword("_EMISSION");
             bulbMaterial.SetColor(EmissionColor, Color.white * 5f);
         }
 
@@ -155,7 +155,7 @@ public class LEDComponent : CircuitComponent
 
     private void PlayHum()
     {
-        if (audioSource == null && humSound == null) return;
+        if (audioSource == null || humSound == null) return;
         if (audioSource.isPlaying) return;
 
 
