@@ -18,6 +18,9 @@ public class SnappableComponent : MonoBehaviour
     private CircuitSolver solver;
     private CircuitComponent component; 
 
+    public InteractionLayerMask placedLayerMask;
+    public InteractionLayerMask defaultLayerMask;
+
     private void Awake()
     {
         solver = FindAnyObjectByType<CircuitSolver>();
@@ -38,6 +41,7 @@ public class SnappableComponent : MonoBehaviour
         {
             isPlaced = false;
             xrGrab.enabled = true;
+            xrGrab.interactionLayers = defaultLayerMask;
 
             foreach(ComponentLeg leg in legs)
             {
@@ -71,7 +75,10 @@ public class SnappableComponent : MonoBehaviour
         if (TrySnapAllLegs())
         {
             isPlaced = true;
-            if(component != null)
+
+            xrGrab.interactionLayers = placedLayerMask;
+
+            if (component != null)
             {
                 solver.RegisterComponent(component);
             }
@@ -103,7 +110,7 @@ public class SnappableComponent : MonoBehaviour
 
         Vector3 midPoint = (pendingSnapPoints[0] + pendingSnapPoints[1]) / 2f;
         transform.position = midPoint;
-        transform.localRotation = Quaternion.identity;
+        //transform.localRotation = Quaternion.identity;
 
 
         for(int i = 0;i < legs.Length; i++)
