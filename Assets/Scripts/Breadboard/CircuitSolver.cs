@@ -62,6 +62,16 @@ public class CircuitSolver : MonoBehaviour
             comp.Simulate(this);
         }
 
+
+        // At the end of Solve()
+        Debug.Log($"=== SOLVE COMPLETE ===");
+        Debug.Log($"Components registered: {components.Count}");
+        Debug.Log($"Solved current: {solvedCurrent}A");
+
+        foreach (var kvp in nodeMap)
+        {
+            Debug.Log($"Node: {kvp.Key} = {kvp.Value.voltage}V");
+        }
     }
 
     public void RegisterComponent(CircuitComponent comp)
@@ -124,66 +134,158 @@ public class CircuitSolver : MonoBehaviour
         }
     }
 
+    //private void CalculateVoltages()
+    //{
+    //    float totalResistance = 0f;
+    //    float totalForwardVoltage = 0f;
+    //    float highVoltage = -1;
+    //    float lowVoltage = -1;
+    //    bool batterOn = false;
+
+
+    //    foreach (CircuitComponent comp in components)
+    //    {
+    //        if (comp is ResisterComponent resister)
+    //        {
+    //            totalResistance += resister.resistance;
+    //        }
+
+    //        if (comp is LEDComponent led)
+    //        {
+    //            totalForwardVoltage += led.forwardVoltage;
+    //        }
+
+    //        if (comp is BatteryComponent battery)
+    //        {
+    //            if (!battery.isPowerOn) return;
+
+    //            highVoltage = battery.legs[0].node.voltage;
+    //            lowVoltage = battery.legs[1].node.voltage;
+    //            batterOn = true;
+    //        }
+    //    }
+
+    //    if (!batterOn) return;
+    //    if (lowVoltage < 0 || highVoltage < 0) return;
+
+    //    float availableVoltage = highVoltage - lowVoltage;
+    //    if (availableVoltage <= 0f) return;
+
+    //    if (totalResistance <= 0f)
+    //    {
+    //        solvedCurrent = 999f;
+    //        return;
+    //    }
+
+    //    float voltageAcrossResister = availableVoltage - totalForwardVoltage;
+    //    if (voltageAcrossResister <= 0)
+    //    {
+    //        solvedCurrent = 0f;
+    //        return;
+    //    }
+
+    //    solvedCurrent = voltageAcrossResister / totalResistance;
+
+    //    foreach (var kvp in nodeMap)
+    //    {
+    //        if (kvp.Value.voltage == -1f)
+    //        {
+    //            kvp.Value.voltage = lowVoltage + totalForwardVoltage;
+    //        }
+    //    }
+
+    //}
+
+
+
     private void CalculateVoltages()
     {
         float totalResistance = 0f;
         float totalForwardVoltage = 0f;
-        float highVoltage = -1;
-        float lowVoltage = -1;
-        bool batterOn = false;
-
+        float highVoltage = -1f;
+        float lowVoltage = -1f;
+        bool batteryOn = false;
 
         foreach (CircuitComponent comp in components)
         {
             if (comp is ResisterComponent resister)
             {
                 totalResistance += resister.resistance;
+                Debug.Log($"Found resistor: {resister.resistance} ohms");
             }
 
             if (comp is LEDComponent led)
             {
                 totalForwardVoltage += led.forwardVoltage;
+                Debug.Log($"Found LED: forwardVoltage = {led.forwardVoltage}V");
             }
 
             if (comp is BatteryComponent battery)
             {
-                if (!battery.isPowerOn) return;
+                batteryOn = battery.isPowerOn;
+                Debug.Log($"Found battery: isPowerOn = {battery.isPowerOn}");
 
-                highVoltage = battery.legs[0].node.voltage;
-                lowVoltage = battery.legs[1].node.voltage;
-                batterOn = true;
+                if (battery.legs[0].node != null)
+                {
+                    highVoltage = battery.legs[0].node.voltage;
+                    Debug.Log($"Battery + node voltage: {highVoltage}V");
+                }
+                else Debug.Log("Battery + leg node is NULL");
+
+                if (battery.legs[1].node != null)
+                {
+                    lowVoltage = battery.legs[1].node.voltage;
+                    Debug.Log($"Battery - node voltage: {lowVoltage}V");
+                }
+                else Debug.Log("Battery - leg node is NULL");
             }
         }
 
-        if (!batterOn) return;
-        if (lowVoltage < 0 || highVoltage < 0) return;
+        if (!batteryOn)
+        {
+            Debug.Log("STOPPED: Battery is off");
+            return;
+        }
+
+        if (highVoltage < 0f || lowVoltage < 0f)
+        {
+            Debug.Log($"STOPPED: highVoltage={highVoltage} lowVoltage={lowVoltage}");
+            return;
+        }
 
         float availableVoltage = highVoltage - lowVoltage;
-        if (availableVoltage <= 0f) return;
+        if (availableVoltage <= 0f)
+        {
+            Debug.Log($"STOPPED: availableVoltage={availableVoltage}");
+            return;
+        }
 
         if (totalResistance <= 0f)
         {
+            Debug.Log("STOPPED: No resistor found — setting current to 999");
             solvedCurrent = 999f;
             return;
         }
 
-        float voltageAcrossResister = availableVoltage - totalForwardVoltage;
-        if (voltageAcrossResister <= 0)
+        float voltageAcrossResistor = availableVoltage - totalForwardVoltage;
+        if (voltageAcrossResistor <= 0f)
         {
+            Debug.Log($"STOPPED: voltageAcrossResistor={voltageAcrossResistor}");
             solvedCurrent = 0f;
             return;
         }
 
-        solvedCurrent = voltageAcrossResister / totalResistance;
+        solvedCurrent = voltageAcrossResistor / totalResistance;
+        Debug.Log($"SUCCESS: solvedCurrent = {solvedCurrent}A");
 
         foreach (var kvp in nodeMap)
         {
             if (kvp.Value.voltage == -1f)
             {
                 kvp.Value.voltage = lowVoltage + totalForwardVoltage;
+                Debug.Log($"Set middle node {kvp.Key} to {kvp.Value.voltage}V");
             }
         }
-
     }
 
     private void MergeWireNodes()

@@ -36,35 +36,77 @@ public class LEDComponent : CircuitComponent
         currentState = LEDState.Off;
     }
 
+    //public override void Simulate(CircuitSolver solver)
+    //{
+    //    if (currentState == LEDState.Blown) return;
+
+    //    //if two legs are not connected then LED will not glow
+    //    if (!IsFullyConnected())
+    //    {
+    //        SetState(LEDState.Off);
+    //        return;
+    //    }
+
+    //    //here we are passing leg[0] and leg[1] because this method automatically takes legs from circuitComponent
+    //    float voltageDrop = GetVoltageDrop(0, 1); 
+
+    //    if(voltageDrop < forwardVoltage)
+    //    {
+    //        SetState(LEDState.Off);
+    //        return;
+    //    }
+
+
+    //    float current = solver.solvedCurrent;
+
+    //    if (current > maxSafeCurrent)
+    //    {
+    //        SetState(LEDState.Blown);
+    //    }
+    //    else
+    //    {
+    //        SetState(LEDState.Glowing);
+    //    }
+    //}
+
     public override void Simulate(CircuitSolver solver)
     {
-        if (currentState == LEDState.Blown) return;
+        Debug.Log($"LED Simulate called. currentState={currentState}");
 
-        //if two legs are not connected then LED will not glow
+        if (currentState == LEDState.Blown)
+        {
+            Debug.Log("LED is blown, skipping");
+            return;
+        }
+
         if (!IsFullyConnected())
         {
+            Debug.Log("LED not fully connected");
             SetState(LEDState.Off);
             return;
         }
 
-        //here we are passing leg[0] and leg[1] because this method automatically takes legs from circuitComponent
-        float voltageDrop = GetVoltageDrop(0, 1); 
+        float voltageDrop = GetVoltageDrop(0, 1);
+        Debug.Log($"LED voltageDrop = {voltageDrop}V, forwardVoltage = {forwardVoltage}V");
 
-        if(voltageDrop < forwardVoltage)
+        if (voltageDrop < forwardVoltage)
         {
+            Debug.Log("LED off - not enough voltage");
             SetState(LEDState.Off);
             return;
         }
-
 
         float current = solver.solvedCurrent;
+        Debug.Log($"LED current = {current}A, maxSafe = {maxSafeCurrent}A");
 
         if (current > maxSafeCurrent)
         {
+            Debug.Log("LED BLOWN");
             SetState(LEDState.Blown);
         }
         else
         {
+            Debug.Log("LED GLOWING");
             SetState(LEDState.Glowing);
         }
     }
