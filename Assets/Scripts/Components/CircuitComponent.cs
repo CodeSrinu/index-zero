@@ -20,6 +20,11 @@ public abstract class CircuitComponent : MonoBehaviour
 
     protected float GetVoltageDrop(int legA, int legB)
     {
+        if(legs.Length < 2)
+        {
+            return 0f;
+        }
+
         if (legs[legA].node == null || legs[legB].node == null) return 0f;
 
         return legs[legA].node.voltage - legs[legB].node.voltage;
