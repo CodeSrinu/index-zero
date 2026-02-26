@@ -406,6 +406,10 @@ MonoBehaviour:
   parentWire: {fileID: 727668889}
   occupiedTarget: {fileID: 0}
   isSnapped: 0
+  placedLayerMask:
+    m_Bits: 0
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!114 &148445501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,6 +1046,10 @@ MonoBehaviour:
   parentWire: {fileID: 1557335731}
   occupiedTarget: {fileID: 0}
   isSnapped: 0
+  placedLayerMask:
+    m_Bits: 0
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!1 &223474084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,6 +1822,10 @@ MonoBehaviour:
   parentWire: {fileID: 727668889}
   occupiedTarget: {fileID: 0}
   isSnapped: 0
+  placedLayerMask:
+    m_Bits: 0
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!114 &450953989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2499,10 +2511,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -2597,6 +2609,10 @@ MonoBehaviour:
   - {fileID: 991224860}
   - {fileID: 283567549}
   isPlaced: 0
+  placedLayerMask:
+    m_Bits: 2
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!114 &527934465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3138,7 +3154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4149,6 +4165,10 @@ MonoBehaviour:
   parentWire: {fileID: 2049258394}
   occupiedTarget: {fileID: 0}
   isSnapped: 0
+  placedLayerMask:
+    m_Bits: 0
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!114 &881187179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4571,6 +4591,10 @@ MonoBehaviour:
   parentWire: {fileID: 2049258394}
   occupiedTarget: {fileID: 0}
   isSnapped: 0
+  placedLayerMask:
+    m_Bits: 0
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!114 &929552517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5869,6 +5893,10 @@ MonoBehaviour:
   parentWire: {fileID: 1557335731}
   occupiedTarget: {fileID: 0}
   isSnapped: 0
+  placedLayerMask:
+    m_Bits: 0
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!1 &1499070365
 GameObject:
   m_ObjectHideFlags: 0
@@ -13174,6 +13202,10 @@ MonoBehaviour:
   - {fileID: 429159389}
   - {fileID: 455345878}
   isPlaced: 0
+  placedLayerMask:
+    m_Bits: 2
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!114 &2075563050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13363,10 +13395,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -13510,10 +13542,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -13715,7 +13747,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 0
+  m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -13787,6 +13819,10 @@ MonoBehaviour:
   - {fileID: 1863503945}
   - {fileID: 276793011}
   isPlaced: 0
+  placedLayerMask:
+    m_Bits: 2
+  defaultLayerMask:
+    m_Bits: 0
 --- !u!1 &2135657949
 GameObject:
   m_ObjectHideFlags: 0
