@@ -228,6 +228,7 @@ public class CircuitSolver : MonoBehaviour
                 if (battery.legs[0].node != null)
                 {
                     highVoltage = battery.legs[0].node.voltage;
+                    highVoltage = 5f;
                     Debug.Log($"Battery + node voltage: {highVoltage}V");
                 }
                 else Debug.Log("Battery + leg node is NULL");
@@ -235,6 +236,7 @@ public class CircuitSolver : MonoBehaviour
                 if (battery.legs[1].node != null)
                 {
                     lowVoltage = battery.legs[1].node.voltage;
+                    lowVoltage = 0f;
                     Debug.Log($"Battery - node voltage: {lowVoltage}V");
                 }
                 else Debug.Log("Battery - leg node is NULL");
